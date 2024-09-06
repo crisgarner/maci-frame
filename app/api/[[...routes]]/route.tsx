@@ -7,7 +7,7 @@ import { handle } from 'frog/next'
 import  { maciAbi } from "./maciAbi.js"
 import  { pollAbi } from "./pollAbi.js"
 import { serveStatic } from 'frog/serve-static'
-import maci from "maci-domainobjs";
+import {PubKey} from "maci-domainobjs";
 
 const { Box, Heading, Text, VStack, HStack, Image, vars } = createSystem()
 const app = new Frog({
@@ -80,8 +80,7 @@ app.frame('/meme', (c) => {
   app.transaction('/signup', (c) => {
     const { inputText } = c
     //check if valid maci
-    console.log(maciAbi);
-    const macikey = inputText ? maci.PubKey.deserialize(inputText).asContractParam() : { x: '', y: '' };
+    const macikey = inputText ? PubKey.deserialize(inputText).asContractParam() : { x: '', y: '' };
     // Contract transaction response.
     return c.contract({
       abi: maciAbi,
