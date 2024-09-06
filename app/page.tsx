@@ -6,7 +6,7 @@ import styles from './page.module.css'
 
 export async function generateMetadata(): Promise<Metadata> {
   const frameTags = await getFrameMetadata(
-    `${process.env.VERCEL_URL || 'http://localhost:3000'}/api`,
+    `https://maci-frame.vercel.app/api`,
   )
   return {
     other: frameTags,
@@ -28,7 +28,7 @@ export default function Home() {
               href="/api/dev"
               style={{ display: 'inline', fontWeight: 'semibold' }}
             >
-              <code className={styles.code}>localhost:3000/api</code>
+              <code className={styles.code}>https://maci-frame.vercel.app/api</code>
             </a>{' '}
             for your frame endpoint.
           </p>
