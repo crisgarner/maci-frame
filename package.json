@@ -1,0 +1,21 @@
+{
+  "name": "maci-frog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "frog vercel-build",
+    "dev": "frog dev",
+    "deploy": "vercel"
+  },
+  "dependencies": {
+    "frog": "latest",
+    "hono": "^4.5.11",
+    "maci-cli": "0.0.0-ci.d071f07",
+    "maci-domainobjs": "^2.2.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vercel": "^32.7.2"
+  }
+}
