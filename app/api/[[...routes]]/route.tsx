@@ -1,31 +1,30 @@
+/** @jsxImportSource frog/jsx */
+
 import { Button, Frog, TextInput } from 'frog'
-import { Box, Heading, Text, VStack, HStack, Image, vars } from './ui.js'
+import { createSystem } from 'frog/ui'
 import { devtools } from 'frog/dev'
-import { serveStatic } from 'frog/serve-static'
-import maci from "maci-domainobjs";
-import { handle } from 'frog/vercel'
+import { handle } from 'frog/next'
 import  { maciAbi } from "./maciAbi.js"
 import  { pollAbi } from "./pollAbi.js"
+import { serveStatic } from 'frog/serve-static'
 import meme1 from "./meme1.jpg"
 import meme2 from "./meme2.png"
 import meme3 from "./meme3.jpeg"
 
-// Uncomment to use Edge Runtime.
-// export const config = {
-//   runtime: 'edge',
-// }
-
-
-export const app = new Frog({
+const { Box, Heading, Text, VStack, HStack, Image, vars } = createSystem()
+const app = new Frog({
   ui: {vars},
   assetsPath: '/',
   basePath: '/api',
-  // Supply a Hub to enable frame verification.
-  // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
   title: 'MACI Frame',
 })
 
+// Uncomment to use Edge Runtime
+// export const runtime = 'edge'
+
 app.frame('/', (c) => {
+  const { buttonValue, inputText, status } = c
+  const fruit = inputText || buttonValue
   return c.res({
     action:'/meme',
     image: (
@@ -50,6 +49,7 @@ app.frame('/', (c) => {
     ],
   })
 })
+
 
 app.frame('/meme', (c) => {
     return c.res({
@@ -113,14 +113,6 @@ app.frame('/meme', (c) => {
 //     })
 //   })
 
-// @ts-ignore
-const isEdgeFunction = typeof EdgeFunction !== 'undefined'
-const isProduction = isEdgeFunction || import.meta.env?.MODE !== 'development'
-devtools(app, isProduction ? { assetsPath: '/.frog' } : { serveStatic })
-
-export const GET = handle(app)
-export const POST = handle(app)
-
 // 0x4Cda5028ebB908D661De76021BDcfF4f6A2F3850 poll
 // const { stateIndex: index, voiceCredits } = await signup({
 //     maciPubKey,
@@ -135,3 +127,25 @@ export const POST = handle(app)
 //  const treeDepths = await pollContract.treeDepths();
 //   const coordinatorPubKeyResult = await pollContract.coordinatorPubKey();
 // const maxVoteOptions = Number(BigInt(maci_core_1.MESSAGE_TREE_ARITY) ** treeDepths.voteOptionTreeDepth);
+
+
+
+
+devtools(app, { serveStatic })
+
+export const GET = handle(app)
+export const POST = handle(app)
+
+// NOTE: That if you are using the devtools and enable Edge Runtime, you will need to copy the devtools
+// static assets to the public folder. You can do this by adding a script to your package.json:
+// ```json
+// {
+//   scripts: {
+//     "copy-static": "cp -r ./node_modules/frog/_lib/ui/.frog ./public/.frog"
+//   }
+// }
+// ```
+// Next, you'll want to set up the devtools to use the correct assets path:
+// ```ts
+// devtools(app, { assetsPath: '/.frog' })
+// ```

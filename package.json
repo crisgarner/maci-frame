@@ -1,21 +1,28 @@
 {
-  "name": "maci-frog",
+  "name": "maci-frame",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "frog vercel-build",
-    "dev": "frog dev",
-    "deploy": "vercel"
+    "dev": "next dev",
+    "deploy": "vercel",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "frog": "latest",
-    "hono": "^4.5.11",
+    "hono": "^4",
     "maci-cli": "0.0.0-ci.d071f07",
-    "maci-domainobjs": "^2.2.0"
+    "maci-domainobjs": "^2.2.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.1.0"
   },
   "devDependencies": {
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.4",
-    "vercel": "^32.7.2"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "vercel": "^32.4.1"
   }
 }
