@@ -7,9 +7,7 @@ import { handle } from 'frog/next'
 import  { maciAbi } from "./maciAbi.js"
 import  { pollAbi } from "./pollAbi.js"
 import { serveStatic } from 'frog/serve-static'
-import meme1 from "./meme1.jpg"
-import meme2 from "./meme2.png"
-import meme3 from "./meme3.jpeg"
+import maci from "maci-domainobjs";
 
 const { Box, Heading, Text, VStack, HStack, Image, vars } = createSystem()
 const app = new Frog({
@@ -60,8 +58,8 @@ app.frame('/meme', (c) => {
         backgroundColor="background"
       >
         <HStack gap="8" grow alignVertical='center'>
-           <Image src={meme1} width="256" borderRadius="10"/>
-           <Image src={meme3} width="256" borderRadius="10"/>
+           <Image src="./meme1.jpg" width="256" borderRadius="10"/>
+           <Image src="./meme3.jpeg" width="256" borderRadius="10"/>
             {/* <Box backgroundColor="red" height="100%" />
             <Box backgroundColor="red" height="100%" /> */}
 
@@ -83,7 +81,7 @@ app.frame('/meme', (c) => {
     const { inputText } = c
     //check if valid maci
     console.log(maciAbi);
-    const macikey = maci.PubKey.deserialize(inputText).asContractParam();
+    const macikey = inputText ? maci.PubKey.deserialize(inputText).asContractParam() : { x: '', y: '' };
     // Contract transaction response.
     return c.contract({
       abi: maciAbi,
